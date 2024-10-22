@@ -30,7 +30,7 @@ public class NewCourseDTO {
     private String instructorEmail;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     private LocalDate inactivationDate;
 
