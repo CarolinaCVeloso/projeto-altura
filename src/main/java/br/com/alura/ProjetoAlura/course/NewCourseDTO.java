@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
-public class NewCourseDTO extends NewCourse {
+public class NewCourseDTO {
 
     @NotNull
     @NotBlank
