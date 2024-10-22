@@ -16,8 +16,8 @@ public class CourseService {
     @Autowired
     private UserRepository userRepository;
 
-    public NewCourseDTO createNewCourse(NewCourseDTO newCourseDTO) {
-        Optional<NewCourseDTO> existingCourse = courseRepository.findByCode(newCourseDTO.getCode());
+    public NewCourse createNewCourse(NewCourseDTO newCourseDTO) {
+        Optional<NewCourse> existingCourse = courseRepository.findByCode(newCourseDTO.getCode());
         if (existingCourse.isPresent()) {
             throw new IllegalArgumentException("Course code already exists.");
         }
@@ -25,15 +25,12 @@ public class CourseService {
             throw new IllegalArgumentException("Invalid instructor email.");
         }
 
-        NewCourseDTO course = new NewCourseDTO();
-        course.setName(newCourseDTO.getName());
-        course.setCode(newCourseDTO.getCode());
-        course.setDescription(newCourseDTO.getDescription());
-        course.setStatus(Status.ACTIVE);
-        course.setInstructorEmail(newCourseDTO.getInstructorEmail());
-        course.setInactivationDate(null);
-
-        return courseRepository.save(course);
+        NewCourse newCourse = new NewCourse();
+        newCourse.setName(newCourseDTO.getName());
+        newCourse.setCode(newCourseDTO.getCode());
+        newCourse.setDescription(newCourseDTO.getDescription());
+        newCourse.setInstructorEmail(newCourseDTO.getInstructorEmail());
+        return courseRepository.save(newCourse);
     }
 
     private boolean isValidInstructorEmail(String email) {
@@ -41,7 +38,7 @@ public class CourseService {
     }
 
     public void deactivateCourse(String code) {
-        NewCourseDTO course = courseRepository.findByCode(code)
+        NewCourse course = courseRepository.findByCode(code)
                 .orElseThrow(() -> new IllegalArgumentException("Course not found."));
         course.setStatus(Status.INACTIVE);
         course.setInactivationDate(LocalDate.now());

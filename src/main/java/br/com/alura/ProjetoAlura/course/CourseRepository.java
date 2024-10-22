@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CourseRepository extends JpaRepository<NewCourseDTO, Long> {
-    Optional<NewCourseDTO> findByCode(String code);
+public interface CourseRepository extends JpaRepository<NewCourse, Long> {
+    Optional<NewCourse> findByCode(String code);
+
 }

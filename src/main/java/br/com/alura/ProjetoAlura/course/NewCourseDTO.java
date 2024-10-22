@@ -1,16 +1,11 @@
 package br.com.alura.ProjetoAlura.course;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDate;
-
-public class NewCourseDTO {
+public class NewCourseDTO extends NewCourse {
 
     @NotNull
     @NotBlank
@@ -19,7 +14,6 @@ public class NewCourseDTO {
     @NotNull
     @NotBlank
     @Length(min = 4, max = 10)
-    @Pattern(regexp = "^[a-zA-Z\\-]+$", message = "Course code must be textual and can contain hyphens only.")
     private String code;
 
     private String description;
@@ -28,11 +22,6 @@ public class NewCourseDTO {
     @NotBlank
     @Email
     private String instructorEmail;
-
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
-
-    private LocalDate inactivationDate;
 
     public NewCourseDTO() {}
 
@@ -66,21 +55,5 @@ public class NewCourseDTO {
 
     public void setInstructorEmail(String instructorEmail) {
         this.instructorEmail = instructorEmail;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public LocalDate getInactivationDate() {
-        return inactivationDate;
-    }
-
-    public void setInactivationDate(LocalDate inactivationDate) {
-        this.inactivationDate = inactivationDate;
     }
 }
