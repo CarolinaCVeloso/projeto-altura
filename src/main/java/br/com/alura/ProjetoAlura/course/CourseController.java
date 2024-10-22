@@ -12,9 +12,9 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    public ResponseEntity<NewCourseDTO> createNewCourse(@RequestBody NewCourseDTO newCourseDTO) {
+    public ResponseEntity<NewCourse> createNewCourse(@RequestBody NewCourseDTO newCourseDTO) {
         try {
-            NewCourseDTO createdCourse = courseService.createNewCourse(newCourseDTO);
+            NewCourse createdCourse = courseService.createNewCourse(newCourseDTO);
             return new ResponseEntity<>(createdCourse, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
