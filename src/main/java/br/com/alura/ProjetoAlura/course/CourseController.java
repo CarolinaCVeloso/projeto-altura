@@ -1,28 +1,33 @@
 package br.com.alura.ProjetoAlura.course;
 
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/course")
 public class CourseController {
 
-    @PostMapping("/course/new")
-    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
-        // TODO: Implementar a Questão 1 - Cadastro de Cursos aqui...
+    @Autowired
+    private CourseService courseService;
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<NewCourseDTO> createNewCourse(@RequestBody NewCourseDTO newCourseDTO) {
+        try {
+            NewCourseDTO createdCourse = courseService.createNewCourse(newCourseDTO);
+            return new ResponseEntity<>(createdCourse, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    @PostMapping("/course/{code}/inactive")
-    public ResponseEntity createCourse(@PathVariable("code") String courseCode) {
-        // TODO: Implementar a Questão 2 - Inativação de Curso aqui...
-
-        return ResponseEntity.ok().build();
+    @PostMapping("/{code}/inactive")
+    public ResponseEntity<Void> deactivateCourse(@PathVariable String code) {
+        try {
+            courseService.deactivateCourse(code);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 }
